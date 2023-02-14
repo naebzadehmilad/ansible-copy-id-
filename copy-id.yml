@@ -1,6 +1,8 @@
-- name: Copy SSH public key to target machine
-  vars:
-    ssh_key: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
-  authorized_key:
-    user: root
-    key: "{{ ssh_key }}"
+- name: Copy SSH public key to remote machine
+  hosts: etcd
+  become: true
+  tasks:
+    - name: Add public key to authorized keys
+      authorized_key:
+        user: root
+        key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
