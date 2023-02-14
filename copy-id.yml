@@ -1,0 +1,6 @@
+- name: Copy SSH public key to target machine
+  vars:
+    ssh_key: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
+  authorized_key:
+    user: root
+    key: "{{ ssh_key }}"
